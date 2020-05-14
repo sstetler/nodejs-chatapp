@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="page-header card">
+            <div class="card-action title">
+              <span class="card-title">Chat Page</span>
+            </div>
+            <div class="card-content">
+              <p>
+                Let's chat about it!
+              </p>
+            </div>
+          </div>
+    </div>
+    
+    <div id="RegisterDiv" class="row module-container">
+        Enter your name to see the available rooms.  Soon you'll be able to start your own room.
+        <form id="RegisterForm">
+            <div class="form-control">
+                <input type="text" id="UsernameInput" placeholder="Your Name Here" required />
+            </div>
+            <button class="btn light-blue" type="submit">Start</button>
+        </form>
+    </div>
+
+    <div id="ChatsDiv" class="hide">
+        <div class="row module-container">
+            <p>Join any of the below rooms by clicking on the room.</p>
+            
+            <div id="ActiveRoomsDiv" class="collection chat-active-rooms">
+                <a class="collection-item active-room-link" data-roomname="Room 1">Room 1 <span class="badge" data-badge-caption="user(s)">0</span></a>
+                <a class="collection-item active-room-link" data-roomname="Room 2">Room 2 <span class="badge" data-badge-caption="user(s)">0</span></a>
+                <a class="collection-item active-room-link" data-roomname="Room 3">Room 3 <span class="badge" data-badge-caption="user(s)">0</span></a>
+            </div>
+        </div>
+
+        <div id="ActiveRoomDiv" class="row module-container hide">
+            <div id="ActiveRoomMessagesDiv" class="chat-messages"></div>
+            
+            <form id="SendRoomMessageForm" class="chat-sendmessage-form">
+                <div class="form-control">
+                    <input id="ChatMessageInput" type="text" placeholder="Enter Message" required autocomplete="off" />
+                </div>
+                <button class="btn light-blue" type="submit">Send
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js" integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/chat.js"></script>

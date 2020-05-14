@@ -1,0 +1,164 @@
+/*
+Note: Some of this CSS may not be utilized.  Didn't cleanup yet since want to keep some of the examples.
+*/
+$body-bg-color: #eceff1;
+$site-header-bg-color: #01579b;
+$nav-bg-color: #0277bd;
+$nav-color: white; 
+$nav-link-active-bg-color: #90a4ae;
+$nav-link-active-color: #000000;
+$page-header-card-title-bg-color: $site-header-bg-color;
+$page-header-card-title-color: white;
+$link-color: #03a9f4;
+$link-active-color: white;
+$link-active-bg-color: #03a9f4;
+
+$card-content-bg-color: #ffffff;
+$card-content-color: #78909c;
+$card-content-title-color: black;
+$card-action-bg-color: $site-header-bg-color;
+$card-action-link-color: white;
+$card-action-link-active-color: #80d8ff ;
+
+body {
+  background-color: $body-bg-color;
+  padding: 0 0 0 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; 
+}
+
+/*Navigation*/
+.xnav {
+  background-color: $nav-bg-color;
+  border-radius: 15px;
+}
+.nav .nav-title{
+  margin-left: 10px;
+  font-size: larger;
+}
+/*x'd some of the below classes out since not overriding now*/
+.xnav ul a {
+  color: $nav-color;
+}
+.xnav li:hover {
+  background-color: $nav-link-active-bg-color;
+  color: $nav-link-active-color;
+  border-style: none none none none; /*not showing for now*/
+  border-width: 0px;
+}
+.xnav li.active {
+   background-color: $nav-link-active-bg-color;
+   color: $nav-link-active-color;
+   border-style: none solid solid solid;
+   border-width: 1px;
+   border-color: $nav-bg-color;
+   border-bottom-left-radius: 10px;
+   border-bottom-right-radius: 10px;
+}
+.xnav-wrapper-extended {
+  background-color: $nav-bg-color;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+
+.page-header.card {
+  //padding: 0px 10px 0px 10px;
+  border-radius: 15px;
+	//display: flex;
+	//align-items: center;
+	//justify-content: space-between;
+}
+div.page-header.card div.title {
+  background-color: $page-header-card-title-bg-color;
+	color: $page-header-card-title-color;
+}
+.div.page-header.card div.card-content {
+  background-color: white;
+  color: $card-content-color;
+}
+
+
+// .card {
+//   background-color: $card-content-bg-color;
+// }
+.card .card-content {
+  background-color: $card-content-bg-color;
+  color: $card-content-color;
+}
+.card .card-content .card-title {
+  color: $card-content-title-color;
+}
+.card .card-action {
+  background-color: $card-action-bg-color;
+}
+.card .card-action a {
+  color: $card-action-link-color;
+}
+.card .card-action a:hover {
+  color: $card-action-link-active-color;
+}
+
+.btn {
+  border-radius: 50px;
+}
+
+.collection a.collection-item {
+  color: $link-color
+}
+.collection a.collection-item.active {
+  background-color: $link-active-bg-color;
+  color: $link-active-color;
+}
+
+.module-container {
+    margin: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px; 
+}
+
+.chat-active-rooms {
+	max-height: 300px;
+	overflow-y: scroll;
+  border-radius: 10px;
+}
+
+.chat-messages {
+	padding: 0px;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+.chat-messages .message {
+    padding: 5px 5px 5px 10px;
+    margin-bottom: 5px;
+	  border-radius: 15px;
+    border-style: none; /*hiding border for now*/
+    border-width: 1px;
+    border-color: #777;
+}
+
+.chat-messages .message .message-source {
+  font-weight: bold;
+	opacity: 0.7;
+}
+
+.chat-messages .message .message-body {
+	color: #777;
+	display:block;
+}
+
+.chat-form-container {
+	padding: 20px 30px;
+}
+
+.chat-form-container form {
+	display: flex;
+}
+
+.chat-form-container input[type='text'] {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	flex: 1;
+}

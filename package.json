@@ -1,0 +1,37 @@
+{
+  "name": "nodejs-chatapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/bin/www",
+    "startDev": "nodemon ./src/bin/www",
+    "@comment": "The below scripts are attemp to get browser auto sync to work (when files are updated), but missing something so not working.",
+    "startDev2": "nodemon ./src/bin/www browser-sync start --server --files \"css/*.css\"  \"*.ejs\" --serveStatic \"./\"",
+    "watch:browsersync": "browser-sync start --server --files \"css/*.css\"  \"*.ejs\" --serveStatic \"./\""
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-ejs-layouts": "^2.5.0",
+    "http-errors": "~1.6.3",
+    "materialize-css": "^1.0.0",
+    "moment": "^2.25.3",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "nodemon": "^2.0.3"
+  },
+  "nodemonConfig": {
+    "ext": "js,json,mjs,ejs,scss",
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "2500"
+  }
+}

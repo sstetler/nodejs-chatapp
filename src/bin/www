@@ -1,0 +1,200 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+const app = require('../app');
+const debug = require('debug')('nodejs-chatapp:server');
+const http = require('http');
+const chatModels = require('../shared/chat-models');
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+function onListening() {
+  const addr = server.address();
+  
+  const bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+
+  debug('Listening on ' + bind);
+}
+
+//BEGIN: Chat socket setup
+const io = require('socket.io')(server);
+
+//NOTE: Could hold onto users on the server, but not getting that complicated yet.  For now, just sending the username through in the request
+const chatsNsIo = io.of('/chats-namespace');
+chatsNsIo.on('connection', (socket) => {
+    //console.log(`chatsNsIo: connected: socket.id ${socket.id}`);
+
+    //Description: Hold onto the user's name via this method.  This should be called before joining a room.
+    //Params: username
+    socket.on('setRegisteredUser', (username) => {
+      //console.log(`chatsNsIo: setRegisteredUser: ${username}`);
+      socket.username = username;
+
+      //Emit active rooms change
+      const activeChatRooms = chatModels.getActiveChatRooms(socket);
+      chatsNsIo.emit('activeChatRoomsChange', activeChatRooms);
+    });
+
+    //Description: Join room request.  Should call the setRegisteredUser method before calling this.
+    //Params: roomName: Name of the room to join.
+    socket.on('joinRoom', (roomName) => {
+      console.log('chatsNsIo: joinRoom: ', roomName);
+      
+      if (socket.currentRoom) {
+        console.log(`chatsNsIo: joinRoom: leaving currentroom: ${socket.currentRoom}`);
+        var previousRoom = socket.currentRoom;
+
+        socket.leave(socket.currentRoom, () => {
+          //Emit to everyone in room
+          socket.broadcast
+            .to(previousRoom)
+            .emit(
+              'chatRoomMessage', 
+              new chatModels.SystemChatMessageDTO(`${socket.username} has left the room!`)
+            );
+        });
+      }
+
+      socket.join(roomName);
+      socket.currentRoom = roomName;
+
+      //Welcome this user to room
+      socket.emit(
+          'chatRoomMessage', 
+          new chatModels.SystemChatMessageDTO(`Welcome to ${socket.currentRoom}, ${socket.username}!`)
+        );
+
+      //Broadcast to other users
+      socket.broadcast
+        .to(socket.currentRoom)
+        .emit(
+          'chatRoomMessage', 
+          new chatModels.SystemChatMessageDTO(`${socket.username} has joined!`)
+        );
+
+        //Emit active rooms change
+        const activeChatRooms = chatModels.getActiveChatRooms(socket);
+        chatsNsIo.emit('activeChatRoomsChange', activeChatRooms);
+    });
+
+    // // Description: Leaves the incoming room.
+    // // Params: roomName: Name of the room to leave.
+    // socket.on('leaveRoom', (roomName) => {
+    //   //console.log('chatsNsIo: leaveRoom: ', roomName);
+    //   socket.leave(roomName, () => {
+    //     socket.currentRoom = null;
+
+    //     //Tell user sorry to see them go
+    //     socket.emit(
+    //         'chatRoomMessage', 
+    //         new chatModels.SystemChatMessageDTO(`Sorry to see you go, ${socket.username}!`)
+    //       );
+
+    //     //Emit to everyone in room
+    //     chatsNsIo.to(roomName)
+    //       .emit(
+    //         'chatRoomMessage', 
+    //         new chatModels.SystemChatMessageDTO(`${socket.username} has left the room!`)
+    //       );
+    //
+    //     const activeChatRooms = chatModels.getActiveChatRooms(socket);
+    //     chatsNsIo.emit('activeChatRoomsChange', activeChatRooms);
+    //   });
+    // });
+
+    //Description: Send ChatRoom message handler.  
+    //  Note that could use the socket.CurrentRoom to determine what room to send to.  However, had the SendMessageRequestDTO in place before tracking the
+    //  socket.currentRoom.  Likewise, sending the room in will allow for the concept of sending a message to a room that the user isn't joined to yet.
+    //Params: requestPayload: SendMessageRequestDTO object.
+    socket.on('chatRoomMessage', (requestPayload) => {
+      //console.log('chatsNs: message: ', requestPayload);
+      const emitPayload = new chatModels.ChatMessageDataDTO(socket.username, requestPayload.message);
+
+      //Emit to everyone in room
+      chatsNsIo.to(requestPayload.roomName)
+        .emit(
+          'chatRoomMessage', 
+          emitPayload
+        );
+    });
+
+    //Description: Fires when disconnected.
+    socket.on('disconnect', () => { 
+      //console.log(`chatsNsIo: disconnected: socket.id ${socket.id}`);
+      //Emit active rooms change
+      const activeChatRooms = chatModels.getActiveChatRooms(socket);
+      chatsNsIo.emit('activeChatRoomsChange', activeChatRooms);
+    });
+  });
+
+//http.listen(3001);
+//END: Chat socket setup

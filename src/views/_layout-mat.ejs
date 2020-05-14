@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>GSS-Labs NodeJs Sandbox <%= (typeof(titleSuffix) != 'undefined') ? titleSuffix : '' %></title>
+      <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+      <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+      <link rel = 'stylesheet' href = '/stylesheets/style.css' />
+      <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>   
+      
+      <!-- <script type = "text/javascript" src = "/javascript/utils.js"></script> -->
+   </head>
+   
+   <body>
+      <header class="site-header light-blue darken-4">
+         <div class="container">
+            <div class="row">
+               <div class="col s12">
+                  <nav class="nav light-blue darken-3">
+                     <div class="nav-wrapper nav-wrapper-extended">
+                        <span class="nav-title left">GSS-Labs</span>
+                        <ul id="nav-mobile" class="left" style="padding-left: 20px">
+                           <li class="<%= ((typeof(currentNavActiveLink) != 'undefined') && (currentNavActiveLink === 'home')) ? 'active' : '' %>"><a href="/">Home</a></li>
+                           <li class="<%= ((typeof(currentNavActiveLink) != 'undefined') && (currentNavActiveLink === 'chat')) ? 'active' : '' %>"><a href="/chat">Chat</a></li>
+                           <li class="<%= ((typeof(currentNavActiveLink) != 'undefined') && (currentNavActiveLink === 'about')) ? 'active' : '' %>"><a href="/about">About</a></li>
+                        </ul>
+                        <a href="/" class="brand-logo right"><i class="material-icons">cloud</i></a>
+                     </div>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </header>
+      
+      <main class="body">
+         <div class="container">
+            <div class="col s12">
+               <%- body %>
+            </div>
+         </div>
+      </main>
+        
+      <footer class="page-footer light-blue darken-4">
+         <div class="container">
+           <div class="row">
+             <div class="col l6 s12">
+               <h5 class="white-text">GSS-Labs NodeJs Sandbox</h5>
+               <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+             </div>
+             <div class="col l4 offset-l2 s12">
+               <h5 class="white-text">Credits</h5>
+               <ul>
+                 <li><a class="grey-text text-lighten-3" href="https://github.com/bradtraversy/chatcord" target="blank">ChatCord Example</a></li>
+               </ul>
+             </div>
+           </div>
+         </div>
+         <div class="footer-copyright">
+           <div class="container">
+           © 2020 Copyright Text
+           <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+           </div>
+         </div>
+       </footer>
+   </body>
+</html>
+

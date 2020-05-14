@@ -1,0 +1,125 @@
+/*
+Note: Some of this CSS may not be utilized.  Didn't cleanup yet since want to keep some of the examples.
+*/
+body {
+  background-color: #eceff1;
+  padding: 0 0 0 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+/*Navigation*/
+.xnav {
+  background-color: #0277bd;
+  border-radius: 15px; }
+
+.nav .nav-title {
+  margin-left: 10px;
+  font-size: larger; }
+
+/*x'd some of the below classes out since not overriding now*/
+.xnav ul a {
+  color: white; }
+
+.xnav li:hover {
+  background-color: #90a4ae;
+  color: #000000;
+  border-style: none none none none;
+  /*not showing for now*/
+  border-width: 0px; }
+
+.xnav li.active {
+  background-color: #90a4ae;
+  color: #000000;
+  border-style: none solid solid solid;
+  border-width: 1px;
+  border-color: #0277bd;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; }
+
+.xnav-wrapper-extended {
+  background-color: #0277bd;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px; }
+
+.page-header.card {
+  border-radius: 15px; }
+
+div.page-header.card div.title {
+  background-color: #01579b;
+  color: white; }
+
+.div.page-header.card div.card-content {
+  background-color: white;
+  color: #78909c; }
+
+.card .card-content {
+  background-color: #ffffff;
+  color: #78909c; }
+
+.card .card-content .card-title {
+  color: black; }
+
+.card .card-action {
+  background-color: #01579b; }
+
+.card .card-action a {
+  color: white; }
+
+.card .card-action a:hover {
+  color: #80d8ff; }
+
+.btn {
+  border-radius: 50px; }
+
+.collection a.collection-item {
+  color: #03a9f4; }
+
+.collection a.collection-item.active {
+  background-color: #03a9f4;
+  color: white; }
+
+.module-container {
+  margin: 15px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px; }
+
+.chat-active-rooms {
+  max-height: 300px;
+  overflow-y: scroll;
+  border-radius: 10px; }
+
+.chat-messages {
+  padding: 0px;
+  max-height: 300px;
+  overflow-y: scroll; }
+
+.chat-messages .message {
+  padding: 5px 5px 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  border-style: none;
+  /*hiding border for now*/
+  border-width: 1px;
+  border-color: #777; }
+
+.chat-messages .message .message-source {
+  font-weight: bold;
+  opacity: 0.7; }
+
+.chat-messages .message .message-body {
+  color: #777;
+  display: block; }
+
+.chat-form-container {
+  padding: 20px 30px; }
+
+.chat-form-container form {
+  display: flex; }
+
+.chat-form-container input[type='text'] {
+  font-size: 16px;
+  padding: 5px;
+  height: 40px;
+  flex: 1; }
+
+/*# sourceMappingURL=style.css.map */
